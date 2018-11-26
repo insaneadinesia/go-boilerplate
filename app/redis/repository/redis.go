@@ -3,10 +3,10 @@ package repository
 import (
 	"time"
 
-	"misteraladin.com/jasmine/go-boiler-plate/config"
+	"misteraladin.com/jasmine/go-boilerplate/config"
 
 	"github.com/go-redis/redis"
-	RedisInterface "misteraladin.com/jasmine/go-boiler-plate/app/redis"
+	RedisInterface "misteraladin.com/jasmine/go-boilerplate/app/redis"
 )
 
 var redisDuration = config.Config.Redis.Duration

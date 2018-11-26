@@ -4,8 +4,8 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	Base "misteraladin.com/jasmine/go-boiler-plate/app/api/handler"
-	HealthCheckInterface "misteraladin.com/jasmine/go-boiler-plate/app/health-check"
+	Base "misteraladin.com/jasmine/go-boilerplate/app/api/handler"
+	HealthCheckInterface "misteraladin.com/jasmine/go-boilerplate/app/health-check"
 )
 
 type HealthCheckResponse struct {

@@ -2,8 +2,8 @@ package repository
 
 import (
 	"github.com/jinzhu/gorm"
-	HealthCheckInterface "misteraladin.com/jasmine/go-boiler-plate/app/health-check"
-	"misteraladin.com/jasmine/go-boiler-plate/models"
+	HealthCheckInterface "misteraladin.com/jasmine/go-boilerplate/app/health-check"
+	"misteraladin.com/jasmine/go-boilerplate/models"
 )
 
 // Define your repository connection

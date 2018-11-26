@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/jinzhu/gorm"
-	"misteraladin.com/jasmine/go-boiler-plate/config"
+	"misteraladin.com/jasmine/go-boilerplate/config"
 
 	// Register Gorm Mysql Driver
 	_ "github.com/jinzhu/gorm/dialects/mysql"

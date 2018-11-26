@@ -5,16 +5,16 @@ import (
 	"log"
 
 	"github.com/gin-gonic/gin"
-	"misteraladin.com/jasmine/go-boiler-plate/config"
-	"misteraladin.com/jasmine/go-boiler-plate/db"
-	"misteraladin.com/jasmine/go-boiler-plate/redis"
+	"misteraladin.com/jasmine/go-boilerplate/config"
+	"misteraladin.com/jasmine/go-boilerplate/db"
+	"misteraladin.com/jasmine/go-boilerplate/redis"
 
-	routes "misteraladin.com/jasmine/go-boiler-plate/app"
+	routes "misteraladin.com/jasmine/go-boilerplate/app"
 
-	HCRepository "misteraladin.com/jasmine/go-boiler-plate/app/health-check/repository"
-	RDRepository "misteraladin.com/jasmine/go-boiler-plate/app/redis/repository"
+	HCRepository "misteraladin.com/jasmine/go-boilerplate/app/health-check/repository"
+	RDRepository "misteraladin.com/jasmine/go-boilerplate/app/redis/repository"
 
-	HCUsecase "misteraladin.com/jasmine/go-boiler-plate/app/health-check/usecase"
+	HCUsecase "misteraladin.com/jasmine/go-boilerplate/app/health-check/usecase"
 )
 
 var appConfig = config.Config.App

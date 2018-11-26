@@ -2,7 +2,7 @@ package redis
 
 import (
 	"github.com/go-redis/redis"
-	"misteraladin.com/jasmine/go-boiler-plate/config"
+	"misteraladin.com/jasmine/go-boilerplate/config"
 )
 
 var (

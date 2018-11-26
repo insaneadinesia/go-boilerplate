@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"time"
 
-	"misteraladin.com/jasmine/payment-gateway/requests"
+	"misteraladin.com/jasmine/go-boilerplate/requests"
 )
 
 var defHTTPTimeout = 80 * time.Second

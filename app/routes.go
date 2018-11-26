@@ -3,9 +3,9 @@ package app
 import (
 	"github.com/gin-gonic/gin"
 
-	HealthCheckInterface "misteraladin.com/jasmine/go-boiler-plate/app/health-check"
+	HealthCheckInterface "misteraladin.com/jasmine/go-boilerplate/app/health-check"
 
-	HCHandler "misteraladin.com/jasmine/go-boiler-plate/app/health-check/handler"
+	HCHandler "misteraladin.com/jasmine/go-boilerplate/app/health-check/handler"
 )
 
 // Define your route here
