@@ -1,0 +1,4 @@
+development:
+  driver: mysql
+  open: root:root@tcp(192.168.10.10:3306)/test
+  locale: Asia/Jakarta

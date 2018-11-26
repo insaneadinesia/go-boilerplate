@@ -1,13 +1,24 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"fmt"
+	"log"
+
+	"github.com/gin-gonic/gin"
+	"misteraladin.com/jasmine/go-boiler-plate/config"
+	"misteraladin.com/jasmine/go-boiler-plate/db"
+)
+
+var appConfig = config.Config.App
 
 func main() {
-	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
-	r.Run() // listen and serve on 0.0.0.0:8080
+	r := gin.New()
+
+	_ = gorm.MysqlConn()
+
+	r.Use(gin.Recovery())
+
+	if err := r.Run(fmt.Sprintf(":%s", appConfig.HTTPPort)); err != nil {
+		log.Fatal(err)
+	}
 }
