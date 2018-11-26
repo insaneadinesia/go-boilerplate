@@ -24,6 +24,7 @@ var Config = struct {
 		Host     string
 		Port     string
 		Password string
+		DB       int
 		Duration int // in minute
 	}
 }{}
