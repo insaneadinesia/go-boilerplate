@@ -3,6 +3,8 @@ package handler
 import (
 	"time"
 
+	"misteraladin.com/jasmine/go-boilerplate/lang"
+
 	"github.com/gin-gonic/gin"
 	Base "misteraladin.com/jasmine/go-boilerplate/app/api/handler"
 	HealthCheckInterface "misteraladin.com/jasmine/go-boilerplate/app/health-check"
@@ -23,7 +25,7 @@ type HealthCheckHandler struct {
 func (a *HealthCheckHandler) Check(c *gin.Context) {
 	healthCheck := a.HealthCheckUsecase.GetDBTimestamp()
 	res := &HealthCheckResponse{
-		HealthStatus: "GOOD",
+		HealthStatus: lang.Translate("health_status", nil),
 		DBTimestamp:  healthCheck.CurrentTimestamp,
 	}
 

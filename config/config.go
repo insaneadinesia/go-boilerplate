@@ -8,6 +8,7 @@ var Config = struct {
 		ENV      string
 		HTTPAddr string
 		HTTPPort string
+		Locale   string
 	}
 
 	DB struct {

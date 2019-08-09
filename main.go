@@ -3,10 +3,12 @@ package main
 import (
 	"fmt"
 	"log"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"misteraladin.com/jasmine/go-boilerplate/config"
-	"misteraladin.com/jasmine/go-boilerplate/db"
+	gorm "misteraladin.com/jasmine/go-boilerplate/db"
+	"misteraladin.com/jasmine/go-boilerplate/lang"
 	"misteraladin.com/jasmine/go-boilerplate/redis"
 
 	routes "misteraladin.com/jasmine/go-boilerplate/app"
@@ -26,6 +28,7 @@ func main() {
 	redis := redis.RedisClient()
 
 	r.Use(gin.Recovery())
+	r.Use(localeMiddleware())
 
 	// Register your repository here to the spesific connection which you'll use.
 	// It can be database connection, redis connection, etc.
@@ -42,5 +45,21 @@ func main() {
 	// Run application
 	if err := r.Run(fmt.Sprintf(":%s", appConfig.HTTPPort)); err != nil {
 		log.Fatal(err)
+	}
+}
+
+func localeMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		switch strings.ToLower(c.GetHeader("Accept-Language")) {
+		case "id":
+			config.Config.App.Locale = "id"
+			break
+		default:
+			config.Config.App.Locale = "en"
+			break
+		}
+
+		lang.LoadLanguage()
+		c.Next()
 	}
 }

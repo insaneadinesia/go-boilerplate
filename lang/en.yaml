@@ -1,0 +1,3 @@
+# GENERAL
+health_status: "GOOD"
+health_status_attribute: "GOOD {{.Attribute}}"
