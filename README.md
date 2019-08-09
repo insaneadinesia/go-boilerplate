@@ -19,3 +19,26 @@ Before you explore the whole codes, please understand the what is the repository
 
 ## License
 See [LICENSE](https://github.com/insaneadinesia/go-boilerplate/blob/master/LICENSE).
+
+## Localization
+Thanks to [nicksnyder/go-i18n](nicksnyder/go-i18n) for the awesome package.
+
+In this boiler plate, I just define two language (english and indonesian). You can override this according to what you need. The value of the language is store in `.yaml` file (in this case `en.yaml` and  `id.yaml`).
+ 
+How to used :
+```
+...
+import "${GOROOT}/go-boilerplate/lang"
+...
+
+func Test() {
+	...
+	val := lang.Translate("your_key_on_yaml_file", nil)
+
+	// If you need to parse attribute
+	attribute := map[string]string{"Attribute": "Value"}
+	val := lang.Translate("your_key_on_yaml_file", attribute)
+	...
+}
+...
+```
