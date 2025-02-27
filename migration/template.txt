@@ -1,0 +1,26 @@
+package migration
+
+import (
+	"time"
+
+	"gorm.io/gorm"
+)
+
+func init() {
+	migrator.AddMigration(&Migration{
+		ID:        0,
+		Name:      "{{.Version}}_{{.Name}}",
+		Batch:     0,
+		CreatedAt: time.Time{},
+		Up:        mig_{{.Version}}_{{.Name}}_up,
+		Down:      mig_{{.Version}}_{{.Name}}_down,
+	})
+}
+
+func mig_{{.Version}}_{{.Name}}_up(tx *gorm.DB) error {
+	return nil
+}
+
+func mig_{{.Version}}_{{.Name}}_down(tx *gorm.DB) error {
+	return nil
+}

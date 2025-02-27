@@ -1,0 +1,85 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is boilerplate code for golang project",
+        "title": "Go-Boilerplate",
+        "contact": {
+            "name": "Rachmat Adi Prakoso",
+            "email": "rachmat.adi.p@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "host": "localhost:9000",
+    "paths": {
+        "/health": {
+            "get": {
+                "description": "API for do health check to dependencies used",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Health Check",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.DefaultResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/health_check.StatusCheck"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "503": {
+                        "description": "Service Unavailable",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.DefaultResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/health_check.StatusCheck"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "health_check.StatusCheck": {
+            "type": "object",
+            "properties": {
+                "db_status": {
+                    "type": "string",
+                    "example": "OK/ERROR"
+                }
+            }
+        },
+        "response.DefaultResponse": {
+            "type": "object",
+            "properties": {
+                "data": {},
+                "error_code": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
