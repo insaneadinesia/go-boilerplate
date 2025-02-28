@@ -7,6 +7,7 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+// @Tags Health Check
 // @Summary Health Check
 // @Description API for do health check to dependencies used
 // @Produce json

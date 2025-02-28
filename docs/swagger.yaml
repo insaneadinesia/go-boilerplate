@@ -7,11 +7,34 @@ definitions:
     type: object
   response.DefaultResponse:
     properties:
-      data: {}
+      data:
+        x-nullable: true
+        x-omitempty: true
       error_code:
         type: string
+        x-omitempty: true
       message:
         type: string
+    type: object
+  user.CreateUpdateUserRequest:
+    properties:
+      email:
+        example: rachmat.adi.p@gmail.com
+        type: string
+      name:
+        example: Rachmat Adi Prakoso
+        type: string
+      sub_district_id:
+        example: 10001
+        type: integer
+      username:
+        example: mamatosai
+        type: string
+    required:
+    - email
+    - name
+    - sub_district_id
+    - username
     type: object
 host: localhost:9000
 info:
@@ -47,4 +70,45 @@ paths:
                   $ref: '#/definitions/health_check.StatusCheck'
               type: object
       summary: Health Check
+      tags:
+      - Health Check
+  /users:
+    post:
+      consumes:
+      - application/json
+      description: API for create user
+      parameters:
+      - description: Payload Create User
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/user.CreateUpdateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.DefaultResponse'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.DefaultResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/response.DefaultResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.DefaultResponse'
+      summary: Create User
+      tags:
+      - Users
 swagger: "2.0"

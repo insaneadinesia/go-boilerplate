@@ -17,6 +17,9 @@
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "Health Check"
+                ],
                 "summary": "Health Check",
                 "responses": {
                     "200": {
@@ -57,6 +60,70 @@
                     }
                 }
             }
+        },
+        "/users": {
+            "post": {
+                "description": "API for create user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Create User",
+                "parameters": [
+                    {
+                        "description": "Payload Create User",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.CreateUpdateUserRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.DefaultResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.DefaultResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "schema": {
+                            "$ref": "#/definitions/response.DefaultResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.DefaultResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -72,12 +139,43 @@
         "response.DefaultResponse": {
             "type": "object",
             "properties": {
-                "data": {},
+                "data": {
+                    "x-nullable": true,
+                    "x-omitempty": true
+                },
                 "error_code": {
-                    "type": "string"
+                    "type": "string",
+                    "x-omitempty": true
                 },
                 "message": {
                     "type": "string"
+                }
+            }
+        },
+        "user.CreateUpdateUserRequest": {
+            "type": "object",
+            "required": [
+                "email",
+                "name",
+                "sub_district_id",
+                "username"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "rachmat.adi.p@gmail.com"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Rachmat Adi Prakoso"
+                },
+                "sub_district_id": {
+                    "type": "integer",
+                    "example": 10001
+                },
+                "username": {
+                    "type": "string",
+                    "example": "mamatosai"
                 }
             }
         }

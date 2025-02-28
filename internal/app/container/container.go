@@ -5,12 +5,14 @@ import (
 	"github.com/insaneadinesia/go-boilerplate/internal/app/driver"
 	"github.com/insaneadinesia/go-boilerplate/internal/app/repository"
 	"github.com/insaneadinesia/go-boilerplate/internal/app/usecase/health_check"
+	"github.com/insaneadinesia/go-boilerplate/internal/app/usecase/user"
 	"github.com/insaneadinesia/gobang/logger"
 )
 
 type Container struct {
 	Config             config.Config
 	HealthCheckUsecase health_check.HealthCheckUsecase
+	UserUsecase        user.UserUsecase
 }
 
 func Setup() *Container {
@@ -30,12 +32,15 @@ func Setup() *Container {
 
 	// Setup Repository
 	healthCheckRepository := repository.NewHealthCheckRepository(db)
+	userRepository := repository.NewUserRepository(db)
 
 	// Setup Usecase
 	healthCheckUsecase := health_check.NewUsecase().SetHealthCheckRepository(healthCheckRepository).Validate()
+	userUsecase := user.NewUsecase().SetUserRepository(userRepository).Validate()
 
 	return &Container{
 		Config:             cfg,
 		HealthCheckUsecase: healthCheckUsecase,
+		UserUsecase:        userUsecase,
 	}
 }

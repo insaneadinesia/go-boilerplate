@@ -21,10 +21,10 @@ func Init(db *gorm.DB) (*Migrator, error) {
 
 	// Create schema_migrations table to remember which migrations were executed.
 	if err := db.Exec(`CREATE TABLE IF NOT EXISTS schema_migrations (
-		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		id SERIAL PRIMARY KEY,
 		name VARCHAR(255) NOT NULL,
 		batch INT NOT NULL,
-		created_at DATETIME DEFAULT CURRENT_TIMESTAMP);
+		created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
 		`).Error; err != nil {
 		fmt.Println("Unable to create schema_migrations table", err)
 		return migrator, err
