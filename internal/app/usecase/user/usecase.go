@@ -8,6 +8,7 @@ import (
 
 type UserUsecase interface {
 	Create(ctx context.Context, req CreateUpdateUserRequest) (err error)
+	GetAll(ctx context.Context, req GetAllUserRequest) (resp GetAllUserResponse, err error)
 }
 
 type usecase struct {

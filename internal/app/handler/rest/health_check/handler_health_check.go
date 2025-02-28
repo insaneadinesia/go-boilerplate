@@ -14,7 +14,7 @@ import (
 // @Success 200 {object} response.DefaultResponse{data=health_check.StatusCheck}
 // @Failure 503 {object} response.DefaultResponse{data=health_check.StatusCheck}
 // @Router /health [get]
-func (h *handler) HealthCheck(c echo.Context) error {
+func (h *handler) HealthCheck(c echo.Context) (err error) {
 	ctx := c.Request().Context()
 
 	code := http.StatusOK

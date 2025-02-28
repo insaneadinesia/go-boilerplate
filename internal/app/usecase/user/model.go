@@ -9,18 +9,31 @@ type CreateUpdateUserRequest struct {
 	SubDistrictID int64  `json:"sub_district_id" validate:"required,gt=10" example:"10001"`
 }
 
+type GetAllUserRequest struct {
+	Name     string `query:"name" example:"Rachmat Adi Prakoso"`
+	Username string `query:"username" example:"mamatosai"`
+	Email    string `query:"email" example:"rachmat.adi.p@gmail.com"`
+	Page     int    `query:"page"`
+	PerPage  int    `query:"per_page"`
+}
+
 type GetAllUserResponse struct {
-	Users      []UserDetailResponse          `json:"users"`
+	Users      []UserResponse                `json:"users"`
 	Pagination pagination.PaginationResponse `json:"pagination"`
 }
 
+type UserResponse struct {
+	UUID      string `json:"uuid" example:"d1e7cbc6-b6db-4f1f-a257-c6985dc2c2e3"`
+	Name      string `json:"name" example:"Rachmat Adi Prakoso"`
+	Username  string `json:"username" example:"mamatosai"`
+	Email     string `json:"email" example:"rachmat.adi.p@gmail.com"`
+	CreatedAt string `json:"created_at" example:"2025-02-28T12:00:00+0700"`
+	UpdatedAt string `json:"updated_at" example:"2025-02-28T12:00:00+0700"`
+}
+
 type UserDetailResponse struct {
-	Name      string       `json:"name" example:"Rachmat Adi Prakoso"`
-	Username  string       `json:"username" example:"mamatosai"`
-	Email     string       `json:"email" example:"rachmat.adi.p@gmail.com"`
-	CreatedAt string       `json:"created_at" example:"2025-02-28T12:00:00+0700"`
-	UpdatedAt string       `json:"updated_at" example:"2025-02-28T12:00:00+0700"`
-	Location  UserLocation `json:"location,omitempty"`
+	UserResponse
+	Location *UserLocation `json:"location"`
 }
 
 type UserLocation struct {

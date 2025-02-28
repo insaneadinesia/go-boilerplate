@@ -5,14 +5,32 @@ definitions:
         example: OK/ERROR
         type: string
     type: object
+  pagination.PaginationResponse:
+    properties:
+      page:
+        example: 1
+        type: integer
+      page_count:
+        example: 10
+        type: integer
+      per_page:
+        example: 20
+        type: integer
+      total_count:
+        example: 200
+        type: integer
+    type: object
   response.DefaultResponse:
     properties:
-      data:
-        x-nullable: true
-        x-omitempty: true
+      data: {}
+      message:
+        type: string
+    type: object
+  response.ErrorResponse:
+    properties:
+      data: {}
       error_code:
         type: string
-        x-omitempty: true
       message:
         type: string
     type: object
@@ -35,6 +53,36 @@ definitions:
     - name
     - sub_district_id
     - username
+    type: object
+  user.GetAllUserResponse:
+    properties:
+      pagination:
+        $ref: '#/definitions/pagination.PaginationResponse'
+      users:
+        items:
+          $ref: '#/definitions/user.UserResponse'
+        type: array
+    type: object
+  user.UserResponse:
+    properties:
+      created_at:
+        example: 2025-02-28T12:00:00+0700
+        type: string
+      email:
+        example: rachmat.adi.p@gmail.com
+        type: string
+      name:
+        example: Rachmat Adi Prakoso
+        type: string
+      updated_at:
+        example: 2025-02-28T12:00:00+0700
+        type: string
+      username:
+        example: mamatosai
+        type: string
+      uuid:
+        example: d1e7cbc6-b6db-4f1f-a257-c6985dc2c2e3
+        type: string
     type: object
 host: localhost:9000
 info:
@@ -73,6 +121,64 @@ paths:
       tags:
       - Health Check
   /users:
+    get:
+      description: API for get all users
+      parameters:
+      - default: 1
+        description: page
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: per_page
+        in: query
+        name: per_page
+        type: integer
+      - description: search by name
+        in: query
+        name: name
+        type: string
+      - description: search by username
+        in: query
+        name: username
+        type: string
+      - description: search by email
+        in: query
+        name: email
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.DefaultResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/user.GetAllUserResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.ErrorResponse'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.ErrorResponse'
+            - properties:
+                data:
+                  type: object
+              type: object
+      summary: Get All Users
+      tags:
+      - Users
     post:
       consumes:
       - application/json
@@ -99,15 +205,30 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/response.DefaultResponse'
+            allOf:
+            - $ref: '#/definitions/response.ErrorResponse'
+            - properties:
+                data:
+                  type: object
+              type: object
         "422":
           description: Unprocessable Entity
           schema:
-            $ref: '#/definitions/response.DefaultResponse'
+            allOf:
+            - $ref: '#/definitions/response.ErrorResponse'
+            - properties:
+                data:
+                  type: object
+              type: object
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/response.DefaultResponse'
+            allOf:
+            - $ref: '#/definitions/response.ErrorResponse'
+            - properties:
+                data:
+                  type: object
+              type: object
       summary: Create User
       tags:
       - Users

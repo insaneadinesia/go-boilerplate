@@ -7,9 +7,13 @@ import (
 )
 
 type DefaultResponse struct {
+	Message string `json:"message"`
+	Data    any    `json:"data,omitempty"`
+}
+
+type ErrorResponse struct {
+	DefaultResponse
 	ErrorCode string `json:"error_code,omitempty"`
-	Message   string `json:"message"`
-	Data      any    `json:"data,omitempty"`
 }
 
 func Success(c echo.Context, data any) error {

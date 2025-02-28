@@ -6,7 +6,7 @@ import (
 )
 
 type HealthCheckHandler interface {
-	HealthCheck(c echo.Context) error
+	HealthCheck(c echo.Context) (err error)
 }
 
 type handler struct {

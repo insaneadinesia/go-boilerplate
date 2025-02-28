@@ -146,9 +146,11 @@ func ErrorHandler() echo.HTTPErrorHandler {
 			return
 		}
 
-		resp := response.DefaultResponse{
+		resp := response.ErrorResponse{
 			ErrorCode: constants.CODE_GENERAL_ERROR,
-			Message:   err.Error(),
+			DefaultResponse: response.DefaultResponse{
+				Message: err.Error(),
+			},
 		}
 
 		status := http.StatusBadRequest

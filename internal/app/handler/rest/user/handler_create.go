@@ -14,9 +14,9 @@ import (
 // @Produce json
 // @Param payload body user.CreateUpdateUserRequest true "Payload Create User"
 // @Success 200 {object} response.DefaultResponse{data=nil}
-// @Failure 400 {object} response.DefaultResponse
-// @Failure 422 {object} response.DefaultResponse
-// @Failure 500 {object} response.DefaultResponse
+// @Failure 400 {object} response.ErrorResponse{data=nil}
+// @Failure 422 {object} response.ErrorResponse{data=nil}
+// @Failure 500 {object} response.ErrorResponse{data=nil}
 // @Router /users [post]
 func (h *handler) Create(c echo.Context) (err error) {
 	ctx := c.Request().Context()

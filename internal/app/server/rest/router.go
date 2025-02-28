@@ -19,5 +19,6 @@ func SetupRouter(server *echo.Echo, container *container.Container) {
 	users := server.Group("/users")
 	{
 		users.POST("", userHandler.Create)
+		users.GET("", userHandler.GetAll)
 	}
 }
