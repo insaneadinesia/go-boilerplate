@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/insaneadinesia/go-boilerplate/config"
-	"github.com/insaneadinesia/go-boilerplate/internal/pkg/rest"
+	"github.com/insaneadinesia/gobang/rest"
 )
 
 type LocationScvWrapper interface {
