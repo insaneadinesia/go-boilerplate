@@ -98,6 +98,7 @@ func LoggingMiddleware(container *container.Container) echo.MiddlewareFunc {
 				ServicePort:    cfg.AppHTTPPort,
 				ReqMethod:      c.Request().Method,
 				ReqURI:         c.Request().URL.String(),
+				ReqHeader:      c.Request().Header,
 			}
 
 			// Request
@@ -125,9 +126,8 @@ func LoggingMiddleware(container *container.Container) echo.MiddlewareFunc {
 			// Calculate execution time
 			execTime := time.Since(start).String()
 
-			// Logging
+			// Logging Response
 			ctxLogger.RespCode = c.Response().Status
-			ctxLogger.ReqHeader = c.Request().Header
 			ctxLogger.RespBody = string(resBody.Bytes())
 			ctxLogger.RespTime = execTime
 
