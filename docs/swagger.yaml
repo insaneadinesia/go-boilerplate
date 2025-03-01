@@ -283,6 +283,57 @@ paths:
       tags:
       - Users
   /users/{uuid}:
+    delete:
+      description: API for delete user by uuid
+      parameters:
+      - default: d1e7cbc6-b6db-4f1f-a257-c6985dc2c2e3
+        description: user uuid
+        in: path
+        name: uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.DefaultResponse'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "404":
+          description: Not Found
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.ErrorResponse'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "422":
+          description: Unprocessable Entity
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.ErrorResponse'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.ErrorResponse'
+            - properties:
+                data:
+                  type: object
+              type: object
+      summary: Delete User By UUID
+      tags:
+      - Users
     get:
       description: API for get user detail by uuid
       parameters:
@@ -332,6 +383,65 @@ paths:
                   type: object
               type: object
       summary: Get User Detail By UUID
+      tags:
+      - Users
+    put:
+      consumes:
+      - application/json
+      description: API for update user
+      parameters:
+      - default: d1e7cbc6-b6db-4f1f-a257-c6985dc2c2e3
+        description: user uuid
+        in: path
+        name: uuid
+        required: true
+        type: string
+      - description: Payload Update User
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/user.CreateUpdateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.DefaultResponse'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.ErrorResponse'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "422":
+          description: Unprocessable Entity
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.ErrorResponse'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.ErrorResponse'
+            - properties:
+                data:
+                  type: object
+              type: object
+      summary: Update User
       tags:
       - Users
 swagger: "2.0"

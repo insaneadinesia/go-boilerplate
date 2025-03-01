@@ -31,5 +31,10 @@ func (u *usecase) Create(ctx context.Context, req CreateUpdateUserRequest) (err 
 	}
 
 	err = u.userRepository.Create(ctx, &user)
+	if err != nil {
+		err = apperror.New(http.StatusUnprocessableEntity, constants.CODE_CREATE_ERROR, err)
+		return
+	}
+
 	return
 }

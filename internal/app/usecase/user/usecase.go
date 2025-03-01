@@ -11,6 +11,8 @@ type UserUsecase interface {
 	Create(ctx context.Context, req CreateUpdateUserRequest) (err error)
 	GetAll(ctx context.Context, req GetAllUserRequest) (resp GetAllUserResponse, err error)
 	GetDetail(ctx context.Context, reqUUID string) (resp UserDetailResponse, err error)
+	Update(ctx context.Context, reqUUID string, req CreateUpdateUserRequest) (err error)
+	Delete(ctx context.Context, reqUUID string) (err error)
 }
 
 type usecase struct {
