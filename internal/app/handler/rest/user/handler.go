@@ -8,6 +8,7 @@ import (
 type UserHandler interface {
 	Create(c echo.Context) (err error)
 	GetAll(c echo.Context) (err error)
+	GetDetail(c echo.Context) (err error)
 }
 
 type handler struct {

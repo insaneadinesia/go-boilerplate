@@ -20,11 +20,11 @@ func (u *usecase) Create(ctx context.Context, req CreateUpdateUserRequest) (err 
 	}
 
 	existingUser, err := u.userRepository.GetByUsernameOrEmail(ctx, req.Username, req.Email)
-	if err != nil && err != gorm.ErrRecordNotFound {
+	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
 		return
 	}
 
-	if existingUser.UUID.String() != "" {
+	if existingUser.Username != "" {
 		err = apperror.New(http.StatusUnprocessableEntity, constants.CODE_DUPLICATE_USERNAME_OR_EMAIL, errors.New("duplicate username or email"))
 
 		return

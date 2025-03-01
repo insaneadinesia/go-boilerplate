@@ -29,7 +29,7 @@ type Config struct {
 	LoggerMaskingFields    []string      `mapstructure:"LOGGER_MASKING_FIELDS"`
 	LocationSvcUrl         string        `mapstructure:"LOCATION_SVC_URL"`
 	LocationSvcTimeout     time.Duration `mapstructure:"LOCATION_SVC_TIMEOUT"`
-	LocationSvcSkipTls     bool          `mapstructure:"LOCATION_SVC_SKIP_TLS"`
+	LocationSvcSkipTLS     bool          `mapstructure:"LOCATION_SVC_SKIP_TLS"`
 	RabbitMQHost           string        `mapstructure:"RABBIT_MQ_HOST"`
 	RabbitMQPort           int           `mapstructure:"RABBIT_MQ_PORT"`
 	RabbitMQUsername       string        `mapstructure:"RABBIT_MQ_USERNAME"`

@@ -3,7 +3,6 @@ package user
 import (
 	"context"
 
-	"github.com/insaneadinesia/go-boilerplate/internal/app/entity"
 	"github.com/insaneadinesia/go-boilerplate/internal/app/repository"
 	"github.com/insaneadinesia/go-boilerplate/internal/pkg/pagination"
 	"golang.org/x/sync/errgroup"
@@ -40,7 +39,7 @@ func (u *usecase) GetAll(ctx context.Context, req GetAllUserRequest) (resp GetAl
 
 		// Mapping Response
 		for _, user := range users {
-			resp.Users = append(resp.Users, u.mappingUserResponse(user).UserResponse)
+			resp.Users = append(resp.Users, u.mappingUserResponse(user, nil).UserResponse)
 		}
 
 		return
@@ -59,21 +58,6 @@ func (u *usecase) GetAll(ctx context.Context, req GetAllUserRequest) (resp GetAl
 
 	if err = g.Wait(); err != nil {
 		return
-	}
-
-	return
-}
-
-func (u *usecase) mappingUserResponse(user entity.User) (result UserDetailResponse) {
-	result = UserDetailResponse{
-		UserResponse: UserResponse{
-			UUID:      user.UUID.String(),
-			Name:      user.Name,
-			Username:  user.Username,
-			Email:     user.Email,
-			CreatedAt: user.CreatedAt.Format("2006-01-02T15:03:02Z0700"),
-			UpdatedAt: user.UpdatedAt.Format("2006-01-02T15:03:02Z0700"),
-		},
 	}
 
 	return

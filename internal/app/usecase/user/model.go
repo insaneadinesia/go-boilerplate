@@ -10,9 +10,9 @@ type CreateUpdateUserRequest struct {
 }
 
 type GetAllUserRequest struct {
-	Name     string `query:"name" example:"Rachmat Adi Prakoso"`
-	Username string `query:"username" example:"mamatosai"`
-	Email    string `query:"email" example:"rachmat.adi.p@gmail.com"`
+	Name     string `query:"name"`
+	Username string `query:"username"`
+	Email    string `query:"email"`
 	Page     int    `query:"page"`
 	PerPage  int    `query:"per_page"`
 }

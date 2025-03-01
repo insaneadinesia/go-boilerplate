@@ -260,6 +260,102 @@
                     }
                 }
             }
+        },
+        "/users/{uuid}": {
+            "get": {
+                "description": "API for get user detail by uuid",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get User Detail By UUID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "d1e7cbc6-b6db-4f1f-a257-c6985dc2c2e3",
+                        "description": "user uuid",
+                        "name": "uuid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.DefaultResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/user.UserDetailResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.ErrorResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.ErrorResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.ErrorResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -352,6 +448,75 @@
                     "items": {
                         "$ref": "#/definitions/user.UserResponse"
                     }
+                }
+            }
+        },
+        "user.UserDetailResponse": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string",
+                    "example": "2025-02-28T12:00:00+0700"
+                },
+                "email": {
+                    "type": "string",
+                    "example": "rachmat.adi.p@gmail.com"
+                },
+                "location": {
+                    "$ref": "#/definitions/user.UserLocation"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Rachmat Adi Prakoso"
+                },
+                "updated_at": {
+                    "type": "string",
+                    "example": "2025-02-28T12:00:00+0700"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "mamatosai"
+                },
+                "uuid": {
+                    "type": "string",
+                    "example": "d1e7cbc6-b6db-4f1f-a257-c6985dc2c2e3"
+                }
+            }
+        },
+        "user.UserLocation": {
+            "type": "object",
+            "properties": {
+                "city_id": {
+                    "type": "integer",
+                    "example": 101
+                },
+                "city_name": {
+                    "type": "string",
+                    "example": "KOTA TANGERANG"
+                },
+                "district_id": {
+                    "type": "integer",
+                    "example": 1001
+                },
+                "district_name": {
+                    "type": "string",
+                    "example": "KARAWACI"
+                },
+                "province_id": {
+                    "type": "integer",
+                    "example": 11
+                },
+                "province_name": {
+                    "type": "string",
+                    "example": "BANTEN"
+                },
+                "sub_district_id": {
+                    "type": "integer",
+                    "example": 10001
+                },
+                "sub_district_name": {
+                    "type": "string",
+                    "example": "CIMONE JAYA"
                 }
             }
         },

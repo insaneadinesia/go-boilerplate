@@ -63,6 +63,56 @@ definitions:
           $ref: '#/definitions/user.UserResponse'
         type: array
     type: object
+  user.UserDetailResponse:
+    properties:
+      created_at:
+        example: 2025-02-28T12:00:00+0700
+        type: string
+      email:
+        example: rachmat.adi.p@gmail.com
+        type: string
+      location:
+        $ref: '#/definitions/user.UserLocation'
+      name:
+        example: Rachmat Adi Prakoso
+        type: string
+      updated_at:
+        example: 2025-02-28T12:00:00+0700
+        type: string
+      username:
+        example: mamatosai
+        type: string
+      uuid:
+        example: d1e7cbc6-b6db-4f1f-a257-c6985dc2c2e3
+        type: string
+    type: object
+  user.UserLocation:
+    properties:
+      city_id:
+        example: 101
+        type: integer
+      city_name:
+        example: KOTA TANGERANG
+        type: string
+      district_id:
+        example: 1001
+        type: integer
+      district_name:
+        example: KARAWACI
+        type: string
+      province_id:
+        example: 11
+        type: integer
+      province_name:
+        example: BANTEN
+        type: string
+      sub_district_id:
+        example: 10001
+        type: integer
+      sub_district_name:
+        example: CIMONE JAYA
+        type: string
+    type: object
   user.UserResponse:
     properties:
       created_at:
@@ -230,6 +280,58 @@ paths:
                   type: object
               type: object
       summary: Create User
+      tags:
+      - Users
+  /users/{uuid}:
+    get:
+      description: API for get user detail by uuid
+      parameters:
+      - default: d1e7cbc6-b6db-4f1f-a257-c6985dc2c2e3
+        description: user uuid
+        in: path
+        name: uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.DefaultResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/user.UserDetailResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.ErrorResponse'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "404":
+          description: Not Found
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.ErrorResponse'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.ErrorResponse'
+            - properties:
+                data:
+                  type: object
+              type: object
+      summary: Get User Detail By UUID
       tags:
       - Users
 swagger: "2.0"

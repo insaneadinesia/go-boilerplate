@@ -6,6 +6,7 @@ import (
 	"github.com/insaneadinesia/go-boilerplate/internal/app/repository"
 	"github.com/insaneadinesia/go-boilerplate/internal/app/usecase/health_check"
 	"github.com/insaneadinesia/go-boilerplate/internal/app/usecase/user"
+	"github.com/insaneadinesia/go-boilerplate/internal/app/wrapper/location_svc"
 	"github.com/insaneadinesia/gobang/logger"
 )
 
@@ -34,9 +35,12 @@ func Setup() *Container {
 	healthCheckRepository := repository.NewHealthCheckRepository(db)
 	userRepository := repository.NewUserRepository(db)
 
+	// Setup Wrapper
+	locationSvcWrapper := location_svc.NewWrapper().SetConfig(cfg).Setup().Validate()
+
 	// Setup Usecase
 	healthCheckUsecase := health_check.NewUsecase().SetHealthCheckRepository(healthCheckRepository).Validate()
-	userUsecase := user.NewUsecase().SetUserRepository(userRepository).Validate()
+	userUsecase := user.NewUsecase().SetUserRepository(userRepository).SetLocationSvcWrapper(locationSvcWrapper).Validate()
 
 	return &Container{
 		Config:             cfg,
