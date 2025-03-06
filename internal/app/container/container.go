@@ -7,6 +7,7 @@ import (
 	"github.com/insaneadinesia/go-boilerplate/internal/app/usecase/health_check"
 	"github.com/insaneadinesia/go-boilerplate/internal/app/usecase/user"
 	"github.com/insaneadinesia/go-boilerplate/internal/app/wrapper/location_svc"
+	"github.com/insaneadinesia/gobang/gotel"
 	"github.com/insaneadinesia/gobang/logger"
 )
 
@@ -29,6 +30,10 @@ func Setup() *Container {
 		EnableStackTrace:    cfg.LoggerEnableStackTrace,
 		EnableMaskingFields: cfg.LoggerEnableMasking,
 		MaskingFields:       cfg.LoggerMaskingFields,
+	})
+
+	gotel.NewOtelWithJeagerExporter(cfg.AppName, gotel.OtelWithJeagerOption{
+		Endpoint: cfg.JaegerEndpoint,
 	})
 
 	// Setup Repository

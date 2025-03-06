@@ -4,11 +4,16 @@ import (
 	"context"
 
 	"github.com/insaneadinesia/go-boilerplate/internal/app/repository"
+	"github.com/insaneadinesia/go-boilerplate/internal/pkg/helper"
 	"github.com/insaneadinesia/go-boilerplate/internal/pkg/pagination"
+	"github.com/insaneadinesia/gobang/gotel"
 	"golang.org/x/sync/errgroup"
 )
 
 func (u *usecase) GetAll(ctx context.Context, req GetAllUserRequest) (resp GetAllUserResponse, err error) {
+	ctx, span := gotel.Otel.DefaultTracer().Start(ctx, helper.GetFuncName())
+	defer span.End()
+
 	if req.Page == 0 {
 		req.Page = 1
 	}

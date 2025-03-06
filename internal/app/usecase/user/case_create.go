@@ -8,10 +8,15 @@ import (
 	"github.com/insaneadinesia/go-boilerplate/internal/app/entity"
 	"github.com/insaneadinesia/go-boilerplate/internal/pkg/apperror"
 	"github.com/insaneadinesia/go-boilerplate/internal/pkg/constants"
+	"github.com/insaneadinesia/go-boilerplate/internal/pkg/helper"
+	"github.com/insaneadinesia/gobang/gotel"
 	"gorm.io/gorm"
 )
 
 func (u *usecase) Create(ctx context.Context, req CreateUpdateUserRequest) (err error) {
+	ctx, span := gotel.Otel.DefaultTracer().Start(ctx, helper.GetFuncName())
+	defer span.End()
+
 	user := entity.User{
 		Name:          req.Name,
 		Username:      req.Username,

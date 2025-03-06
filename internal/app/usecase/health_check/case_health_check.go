@@ -1,8 +1,16 @@
 package health_check
 
-import "context"
+import (
+	"context"
+
+	"github.com/insaneadinesia/go-boilerplate/internal/pkg/helper"
+	"github.com/insaneadinesia/gobang/gotel"
+)
 
 func (u *usecase) HealthCheck(ctx context.Context) (resp StatusCheck, err error) {
+	ctx, span := gotel.Otel.DefaultTracer().Start(ctx, helper.GetFuncName())
+	defer span.End()
+
 	const (
 		STATUS_OK    = "OK"
 		STATUS_ERROR = "ERROR"

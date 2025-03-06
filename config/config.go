@@ -34,6 +34,7 @@ type Config struct {
 	RabbitMQPort           int           `mapstructure:"RABBIT_MQ_PORT"`
 	RabbitMQUsername       string        `mapstructure:"RABBIT_MQ_USERNAME"`
 	RabbitMQPassword       string        `mapstructure:"RABBIT_MQ_PASSWORD"`
+	JaegerEndpoint         string        `mapstructure:"JAEGER_ENDPOINT"`
 }
 
 func Load() Config {

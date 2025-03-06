@@ -20,6 +20,7 @@ import (
 	"github.com/insaneadinesia/gobang/logger"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"go.opentelemetry.io/contrib/instrumentation/github.com/labstack/echo/otelecho"
 )
 
 // ResponseRecorder is a custom response writer to capture the response body
@@ -75,6 +76,7 @@ func SetupMiddleware(server *echo.Echo, container *container.Container) {
 		AllowCredentials: true,
 	}))
 
+	server.Use(otelecho.Middleware(container.Config.AppName))
 	server.Use(middleware.Recover())
 	server.Use(LoggingMiddleware(container))
 

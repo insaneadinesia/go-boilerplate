@@ -8,10 +8,15 @@ import (
 	"github.com/google/uuid"
 	"github.com/insaneadinesia/go-boilerplate/internal/pkg/apperror"
 	"github.com/insaneadinesia/go-boilerplate/internal/pkg/constants"
+	"github.com/insaneadinesia/go-boilerplate/internal/pkg/helper"
+	"github.com/insaneadinesia/gobang/gotel"
 	"gorm.io/gorm"
 )
 
 func (u *usecase) Delete(ctx context.Context, reqUUID string) (err error) {
+	ctx, span := gotel.Otel.DefaultTracer().Start(ctx, helper.GetFuncName())
+	defer span.End()
+
 	parseUUID, err := uuid.Parse(reqUUID)
 	if err != nil {
 		return
