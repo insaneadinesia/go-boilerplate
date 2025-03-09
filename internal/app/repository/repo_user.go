@@ -41,7 +41,7 @@ func NewUserRepository(db *gorm.DB) User {
 }
 
 func (u *user) GetByUUID(ctx context.Context, uuid uuid.UUID) (entity entity.User, err error) {
-	ctx, span := gotel.Otel.DefaultTracer().Start(ctx, helper.GetFuncName())
+	ctx, span := gotel.DefaultTracer().Start(ctx, helper.GetFuncName())
 	defer span.End()
 
 	err = u.db.WithContext(ctx).Last(&entity, uuid).Error
@@ -49,7 +49,7 @@ func (u *user) GetByUUID(ctx context.Context, uuid uuid.UUID) (entity entity.Use
 }
 
 func (u *user) GetByUsernameOrEmail(ctx context.Context, username, email string) (entity entity.User, err error) {
-	ctx, span := gotel.Otel.DefaultTracer().Start(ctx, helper.GetFuncName())
+	ctx, span := gotel.DefaultTracer().Start(ctx, helper.GetFuncName())
 	defer span.End()
 
 	err = u.db.WithContext(ctx).Where("username = ? OR email = ?", username, email).Take(&entity).Error
@@ -57,7 +57,7 @@ func (u *user) GetByUsernameOrEmail(ctx context.Context, username, email string)
 }
 
 func (u *user) GetAll(ctx context.Context, filter UserFilter) (entities []entity.User, err error) {
-	ctx, span := gotel.Otel.DefaultTracer().Start(ctx, helper.GetFuncName())
+	ctx, span := gotel.DefaultTracer().Start(ctx, helper.GetFuncName())
 	defer span.End()
 
 	err = u.buildQuery(ctx, filter).Limit(filter.Limit).Offset(filter.Offset).Find(&entities).Error
@@ -65,7 +65,7 @@ func (u *user) GetAll(ctx context.Context, filter UserFilter) (entities []entity
 }
 
 func (u *user) CountTotal(ctx context.Context, filter UserFilter) (total int64, err error) {
-	ctx, span := gotel.Otel.DefaultTracer().Start(ctx, helper.GetFuncName())
+	ctx, span := gotel.DefaultTracer().Start(ctx, helper.GetFuncName())
 	defer span.End()
 
 	err = u.buildQuery(ctx, filter).Model(&entity.User{}).Count(&total).Error
@@ -73,7 +73,7 @@ func (u *user) CountTotal(ctx context.Context, filter UserFilter) (total int64, 
 }
 
 func (u *user) Create(ctx context.Context, entity *entity.User) (err error) {
-	ctx, span := gotel.Otel.DefaultTracer().Start(ctx, helper.GetFuncName())
+	ctx, span := gotel.DefaultTracer().Start(ctx, helper.GetFuncName())
 	defer span.End()
 
 	err = u.db.WithContext(ctx).Create(entity).Error
@@ -81,7 +81,7 @@ func (u *user) Create(ctx context.Context, entity *entity.User) (err error) {
 }
 
 func (u *user) Update(ctx context.Context, entity *entity.User) (err error) {
-	ctx, span := gotel.Otel.DefaultTracer().Start(ctx, helper.GetFuncName())
+	ctx, span := gotel.DefaultTracer().Start(ctx, helper.GetFuncName())
 	defer span.End()
 
 	err = u.db.WithContext(ctx).Save(entity).Error
@@ -89,7 +89,7 @@ func (u *user) Update(ctx context.Context, entity *entity.User) (err error) {
 }
 
 func (u *user) Delete(ctx context.Context, entity *entity.User) (err error) {
-	ctx, span := gotel.Otel.DefaultTracer().Start(ctx, helper.GetFuncName())
+	ctx, span := gotel.DefaultTracer().Start(ctx, helper.GetFuncName())
 	defer span.End()
 
 	err = u.db.WithContext(ctx).Delete(entity).Error

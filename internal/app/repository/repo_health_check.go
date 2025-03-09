@@ -27,7 +27,7 @@ func NewHealthCheckRepository(db *gorm.DB) HealthCheck {
 }
 
 func (r *heatlhCheck) PingDB(ctx context.Context) (err error) {
-	ctx, span := gotel.Otel.DefaultTracer().Start(ctx, helper.GetFuncName())
+	ctx, span := gotel.DefaultTracer().Start(ctx, helper.GetFuncName())
 	defer span.End()
 
 	db, _ := r.db.DB()

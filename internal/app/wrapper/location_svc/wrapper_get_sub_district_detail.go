@@ -12,7 +12,7 @@ import (
 )
 
 func (w *wrapper) GetSubDistrictDetail(ctx context.Context, id int64) (resp GetSubDistrictDetailResponse, err error) {
-	ctx, span := gotel.Otel.DefaultTracer().Start(ctx, helper.GetFuncName())
+	ctx, span := gotel.DefaultTracer().Start(ctx, helper.GetFuncName())
 	defer span.End()
 
 	path := fmt.Sprintf("/sub-district/%d?name=1212", id)

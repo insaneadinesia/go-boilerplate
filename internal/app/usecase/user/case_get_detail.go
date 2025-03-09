@@ -14,7 +14,7 @@ import (
 )
 
 func (u *usecase) GetDetail(ctx context.Context, reqUUID string) (resp UserDetailResponse, err error) {
-	ctx, span := gotel.Otel.DefaultTracer().Start(ctx, helper.GetFuncName())
+	ctx, span := gotel.DefaultTracer().Start(ctx, helper.GetFuncName())
 	defer span.End()
 
 	parseUUID, err := uuid.Parse(reqUUID)

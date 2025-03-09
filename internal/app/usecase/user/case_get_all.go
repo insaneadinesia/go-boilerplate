@@ -11,7 +11,7 @@ import (
 )
 
 func (u *usecase) GetAll(ctx context.Context, req GetAllUserRequest) (resp GetAllUserResponse, err error) {
-	ctx, span := gotel.Otel.DefaultTracer().Start(ctx, helper.GetFuncName())
+	ctx, span := gotel.DefaultTracer().Start(ctx, helper.GetFuncName())
 	defer span.End()
 
 	if req.Page == 0 {

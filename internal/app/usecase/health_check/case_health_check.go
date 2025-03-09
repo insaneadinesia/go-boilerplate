@@ -8,7 +8,7 @@ import (
 )
 
 func (u *usecase) HealthCheck(ctx context.Context) (resp StatusCheck, err error) {
-	ctx, span := gotel.Otel.DefaultTracer().Start(ctx, helper.GetFuncName())
+	ctx, span := gotel.DefaultTracer().Start(ctx, helper.GetFuncName())
 	defer span.End()
 
 	const (

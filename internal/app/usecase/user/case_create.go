@@ -14,7 +14,7 @@ import (
 )
 
 func (u *usecase) Create(ctx context.Context, req CreateUpdateUserRequest) (err error) {
-	ctx, span := gotel.Otel.DefaultTracer().Start(ctx, helper.GetFuncName())
+	ctx, span := gotel.DefaultTracer().Start(ctx, helper.GetFuncName())
 	defer span.End()
 
 	user := entity.User{

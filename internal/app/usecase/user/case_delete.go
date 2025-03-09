@@ -14,7 +14,7 @@ import (
 )
 
 func (u *usecase) Delete(ctx context.Context, reqUUID string) (err error) {
-	ctx, span := gotel.Otel.DefaultTracer().Start(ctx, helper.GetFuncName())
+	ctx, span := gotel.DefaultTracer().Start(ctx, helper.GetFuncName())
 	defer span.End()
 
 	parseUUID, err := uuid.Parse(reqUUID)
