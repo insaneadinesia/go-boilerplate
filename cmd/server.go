@@ -22,6 +22,7 @@ func newServerCmd() *cobra.Command {
 	}
 
 	serverCmd.AddCommand(server.NewRestServer())
+	serverCmd.AddCommand(server.NewWorkerServer())
 
 	return serverCmd
 }

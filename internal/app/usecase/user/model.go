@@ -1,6 +1,8 @@
 package user
 
-import "github.com/insaneadinesia/go-boilerplate/internal/pkg/pagination"
+import (
+	"github.com/insaneadinesia/go-boilerplate/internal/pkg/pagination"
+)
 
 type CreateUpdateUserRequest struct {
 	Name          string `json:"name" validate:"required" example:"Rachmat Adi Prakoso"`
@@ -45,4 +47,7 @@ type UserLocation struct {
 	CityName        string `json:"city_name" example:"KOTA TANGERANG"`
 	ProvinceID      int64  `json:"province_id" example:"11"`
 	ProvinceName    string `json:"province_name" example:"BANTEN"`
+}
+type CreatedUserPayload struct {
+	UUID string `json:"uuid"`
 }

@@ -23,6 +23,7 @@ func Setup() *Container {
 
 	// Setup Driver
 	db, _ := driver.NewPostgresDatabase(cfg)
+	asynqClient := driver.NewAsynqClient(cfg)
 
 	// Setup Tools
 	logger.NewLogger(logger.Option{
@@ -45,7 +46,7 @@ func Setup() *Container {
 
 	// Setup Usecase
 	healthCheckUsecase := health_check.NewUsecase().SetHealthCheckRepository(healthCheckRepository).Validate()
-	userUsecase := user.NewUsecase().SetUserRepository(userRepository).SetLocationSvcWrapper(locationSvcWrapper).Validate()
+	userUsecase := user.NewUsecase().SetUserRepository(userRepository).SetLocationSvcWrapper(locationSvcWrapper).SetAsynqClient(asynqClient).Validate()
 
 	return &Container{
 		Config:             cfg,

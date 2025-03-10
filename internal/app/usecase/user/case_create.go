@@ -2,9 +2,11 @@ package user
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"net/http"
 
+	"github.com/hibiken/asynq"
 	"github.com/insaneadinesia/go-boilerplate/internal/app/entity"
 	"github.com/insaneadinesia/go-boilerplate/internal/pkg/apperror"
 	"github.com/insaneadinesia/go-boilerplate/internal/pkg/constants"
@@ -40,6 +42,14 @@ func (u *usecase) Create(ctx context.Context, req CreateUpdateUserRequest) (err 
 		err = apperror.New(http.StatusUnprocessableEntity, constants.CODE_CREATE_ERROR, err)
 		return
 	}
+
+	// Inform 3rd Party
+	payload := CreatedUserPayload{
+		UUID: user.UUID.String(),
+	}
+
+	jsonPayload, _ := json.Marshal(payload)
+	u.asynqClient.EnqueueContext(ctx, asynq.NewTask(constants.QUEUE_USER_CREATED, jsonPayload, asynq.MaxRetry(3)))
 
 	return
 }
