@@ -2,10 +2,10 @@ package user
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/insaneadinesia/go-boilerplate/internal/pkg/helper"
 	"github.com/insaneadinesia/gobang/gotel"
+	"github.com/insaneadinesia/gobang/logger"
 )
 
 func (u *usecase) Inform3rdParty(ctx context.Context, req CreatedUserPayload) (err error) {
@@ -13,8 +13,7 @@ func (u *usecase) Inform3rdParty(ctx context.Context, req CreatedUserPayload) (e
 	defer span.End()
 
 	// DO SOMETHING
-	fmt.Println("Created User UUID: ", req.UUID)
-	fmt.Println("Inform 3rd Party...")
+	logger.Log.Info(ctx, "Inform 3rd Party...", req)
 
 	return
 }

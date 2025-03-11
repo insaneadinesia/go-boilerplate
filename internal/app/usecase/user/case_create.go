@@ -2,15 +2,14 @@ package user
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
 	"net/http"
 
-	"github.com/hibiken/asynq"
 	"github.com/insaneadinesia/go-boilerplate/internal/app/entity"
 	"github.com/insaneadinesia/go-boilerplate/internal/pkg/apperror"
 	"github.com/insaneadinesia/go-boilerplate/internal/pkg/constants"
 	"github.com/insaneadinesia/go-boilerplate/internal/pkg/helper"
+	"github.com/insaneadinesia/go-boilerplate/internal/pkg/worker"
 	"github.com/insaneadinesia/gobang/gotel"
 	"gorm.io/gorm"
 )
@@ -48,8 +47,7 @@ func (u *usecase) Create(ctx context.Context, req CreateUpdateUserRequest) (err 
 		UUID: user.UUID.String(),
 	}
 
-	jsonPayload, _ := json.Marshal(payload)
-	u.asynqClient.EnqueueContext(ctx, asynq.NewTask(constants.QUEUE_USER_CREATED, jsonPayload, asynq.MaxRetry(3)))
+	worker.AsynqEnqueueTaskWithTrace(ctx, u.asynqClient, constants.QUEUE_USER_CREATED, payload, 3)
 
 	return
 }

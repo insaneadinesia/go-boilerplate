@@ -4,12 +4,11 @@ import (
 	"context"
 	"encoding/json"
 
-	"github.com/hibiken/asynq"
 	"github.com/insaneadinesia/go-boilerplate/internal/app/usecase/user"
 )
 
 type WorkerUserHandler interface {
-	InformUserCreated(ctx context.Context, t *asynq.Task) (err error)
+	InformUserCreated(ctx context.Context, payload any) (err error)
 }
 
 type handler struct {
@@ -33,13 +32,17 @@ func (h *handler) Validate() WorkerUserHandler {
 	return h
 }
 
-func (h *handler) InformUserCreated(ctx context.Context, t *asynq.Task) (err error) {
+func (h *handler) InformUserCreated(ctx context.Context, payload any) (err error) {
 	req := user.CreatedUserPayload{}
-	if err = json.Unmarshal(t.Payload(), &req); err != nil {
+
+	by, _ := json.Marshal(payload)
+	err = json.Unmarshal(by, &req)
+	if err != nil {
 		return
 	}
 
-	if err = h.userUsecase.Inform3rdParty(ctx, req); err != nil {
+	err = h.userUsecase.Inform3rdParty(ctx, req)
+	if err != nil {
 		return
 	}
 
