@@ -1,0 +1,91 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "github.com/insaneadinesia/go-boilerplate/internal/app/handler/grpc/user";
+
+message GetAllUserRequest {
+  string name = 1;
+  string username = 2;
+  string email = 3;
+  int32 page = 4;
+  int32 per_page = 5;
+}
+
+message GetUserDetailRequest {
+  string uuid = 1;
+}
+
+message CreateUserRequest {
+  string name = 1;
+  string username = 2;
+  string email = 3;
+  int64 sub_district_id = 4;
+}
+
+message UpdateUserRequest {
+  string uuid = 1;
+  string name = 2;
+  string username = 3;
+  string email = 4;
+  int64 sub_district_id = 5;
+}
+
+message DeleteUserRequest {
+  string uuid = 1;
+}
+
+message CreateUpdateDeleteResponse {
+  string message = 1;
+}
+
+message GetAllUserResponse {
+  string message = 1;
+  GetAllUserData data = 2;
+}
+
+message GetUserDetailResponse {
+  string message = 1;
+  UserData data = 2;
+}
+
+message GetAllUserData {
+  repeated UserData users = 1;
+  PaginationData pagination = 2;
+}
+
+message UserData {
+  string uuid = 1;
+  string name = 2;
+  string username = 3;
+  string email = 4;
+  string created_at = 5;
+  string updated_at = 6;
+  optional UserLocationData location = 7;
+}
+
+message UserLocationData {
+  int64 sub_district_id = 1;
+  string sub_district_name = 2;
+  int64 district_id = 3;
+  string district_name = 4;
+  int64 city_id = 5;
+  string city_name = 6;
+  int64 province_id = 7;
+  string province_name = 8;
+}
+
+message PaginationData {
+  int32 page = 1;
+  int32 per_page = 2;
+  int32 page_count = 3;
+  int64 total_count = 4;
+}
+
+service UserService {
+  rpc GetAll(GetAllUserRequest) returns (GetAllUserResponse);
+  rpc GetDetail(GetUserDetailRequest) returns (GetUserDetailResponse);
+  rpc Create(CreateUserRequest) returns (CreateUpdateDeleteResponse);
+  rpc Update(UpdateUserRequest) returns (CreateUpdateDeleteResponse);
+  rpc Delete(DeleteUserRequest) returns (CreateUpdateDeleteResponse);
+}
