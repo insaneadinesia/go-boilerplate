@@ -30,7 +30,4 @@ swag-install:
 	go install github.com/swaggo/swag/cmd/swag@latest
 	
 swag-init:
-	swag init --parseDependency --parseInternal
-
-run:
-	go run main.go server rest
+	swag init --parseDependency --parseInternal --parseDepth 1 --overridesFile .swaggo

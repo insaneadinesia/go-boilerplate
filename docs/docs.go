@@ -124,7 +124,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/user.GetAllUserResponse"
+                                            "$ref": "#/definitions/github_com_insaneadinesia_go-boilerplate_internal_app_usecase_user.GetAllUserResponse"
                                         }
                                     }
                                 }
@@ -566,6 +566,20 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "github_com_insaneadinesia_go-boilerplate_internal_app_usecase_user.GetAllUserResponse": {
+            "type": "object",
+            "properties": {
+                "pagination": {
+                    "$ref": "#/definitions/pagination.PaginationResponse"
+                },
+                "users": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/user.UserResponse"
+                    }
+                }
+            }
+        },
         "health_check.StatusCheck": {
             "type": "object",
             "properties": {
@@ -641,20 +655,6 @@ const docTemplate = `{
                 "username": {
                     "type": "string",
                     "example": "mamatosai"
-                }
-            }
-        },
-        "user.GetAllUserResponse": {
-            "type": "object",
-            "properties": {
-                "pagination": {
-                    "$ref": "#/definitions/pagination.PaginationResponse"
-                },
-                "users": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/user.UserResponse"
-                    }
                 }
             }
         },

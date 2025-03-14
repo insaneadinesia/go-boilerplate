@@ -1,4 +1,13 @@
 definitions:
+  github_com_insaneadinesia_go-boilerplate_internal_app_usecase_user.GetAllUserResponse:
+    properties:
+      pagination:
+        $ref: '#/definitions/pagination.PaginationResponse'
+      users:
+        items:
+          $ref: '#/definitions/user.UserResponse'
+        type: array
+    type: object
   health_check.StatusCheck:
     properties:
       db_status:
@@ -53,15 +62,6 @@ definitions:
     - name
     - sub_district_id
     - username
-    type: object
-  user.GetAllUserResponse:
-    properties:
-      pagination:
-        $ref: '#/definitions/pagination.PaginationResponse'
-      users:
-        items:
-          $ref: '#/definitions/user.UserResponse'
-        type: array
     type: object
   user.UserDetailResponse:
     properties:
@@ -206,7 +206,7 @@ paths:
             - $ref: '#/definitions/response.DefaultResponse'
             - properties:
                 data:
-                  $ref: '#/definitions/user.GetAllUserResponse'
+                  $ref: '#/definitions/github_com_insaneadinesia_go-boilerplate_internal_app_usecase_user.GetAllUserResponse'
               type: object
         "400":
           description: Bad Request
