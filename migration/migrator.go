@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"sort"
 	"text/template"
 	"time"
 
@@ -102,7 +103,17 @@ func (m *Migrator) AddMigration(mg *Migration) {
 func (m *Migrator) Up() error {
 	tx := m.db.Begin()
 
-	for _, mg := range m.Migrations {
+	// Sort migrations by name to ensure they run in chronological order
+	var migrationNames []string
+	for name := range m.Migrations {
+		migrationNames = append(migrationNames, name)
+	}
+	// Sort migration names (they have timestamp prefixes like "20250227233650_")
+	sort.Strings(migrationNames)
+
+	// Execute migrations in sorted order
+	for _, name := range migrationNames {
+		mg := m.Migrations[name]
 		if mg.done {
 			continue
 		}
@@ -130,10 +141,19 @@ func (m *Migrator) Up() error {
 func (m *Migrator) Down() error {
 	tx := m.db.Begin()
 
-	for _, mg := range m.Migrations {
-		if !mg.done || mg.Batch != m.MaxBatch {
-			continue
+	// Sort migrations by name to ensure they revert in reverse chronological order
+	var migrationNames []string
+	for name, mg := range m.Migrations {
+		if mg.done && mg.Batch == m.MaxBatch {
+			migrationNames = append(migrationNames, name)
 		}
+	}
+	// Sort in reverse order (newest first)
+	sort.Sort(sort.Reverse(sort.StringSlice(migrationNames)))
+
+	// Revert migrations in reverse chronological order
+	for _, name := range migrationNames {
+		mg := m.Migrations[name]
 
 		fmt.Println("Reverting migration", mg.Name)
 		if err := mg.Down(tx); err != nil {
@@ -156,11 +176,21 @@ func (m *Migrator) Down() error {
 
 // MigrationStatus .
 func (m *Migrator) MigrationStatus() error {
-	for _, mg := range m.Migrations {
+	// Sort migrations by name for consistent output
+	var migrationNames []string
+	for name := range m.Migrations {
+		migrationNames = append(migrationNames, name)
+	}
+	// Sort in chronological order
+	sort.Strings(migrationNames)
+
+	// Display status in sorted order
+	for _, name := range migrationNames {
+		mg := m.Migrations[name]
 		if mg.done {
-			fmt.Printf("%s", fmt.Sprintf("Migration %s... completed", mg.Name))
+			fmt.Printf("%s\n", fmt.Sprintf("Migration %s... completed", mg.Name))
 		} else {
-			fmt.Printf("%s", fmt.Sprintf("Migration %s... pending", mg.Name))
+			fmt.Printf("%s\n", fmt.Sprintf("Migration %s... pending", mg.Name))
 		}
 	}
 
